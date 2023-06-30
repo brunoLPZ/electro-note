@@ -1,0 +1,85 @@
+{
+  "NOTES": {
+    "HOME": {
+      "PAGE": {
+        "LATEST": "Latest notes",
+        "QUICK_ACTIONS": {
+          "NEW": "New note",
+          "EDITOR": "Editor",
+          "SEARCH": "Search note"
+        },
+        "TAGS_CHART": {
+          "TITLE": "Most used tags",
+          "PLACEHOLDER": "Remember you can add tags to your notes"
+        },
+        "TASKS_CHART": {
+          "TITLE": "Task summary",
+          "COMPLETED_LABEL": "COMPLETED",
+          "PENDING_LABEL": "PENDING",
+          "PLACEHOLDER": "You can add tasks to your notes using standard markdown syntax"
+        }
+      }
+    },
+    "EDITOR": {
+      "PAGE": {
+        "SELECT_NOTE_1": "Select a note or ",
+        "SELECT_NOTE_LINK": "create",
+        "SELECT_NOTE_2": " a new one"
+      },
+      "STATUS_BAR": {
+        "WORDS": "Words"
+      }
+    },
+    "DIALOG": {
+      "TITLE": "Note",
+      "FORM": {
+        "TITLE": "Title",
+        "TITLE_PLACEHOLDER": "Note title",
+        "DESCRIPTION": "Description",
+        "DESCRIPTION_PLACEHOLDER": "Note description",
+        "TAGS": "Tags",
+        "TAGS_PLACEHOLDER": "tag1, tag2, tag3"
+      },
+      "SAVE": "Save",
+      "CLOSE": "Close"
+    }
+  },
+  "LINK": {
+    "DIALOG": {
+      "TITLE": "New link",
+      "FORM": {
+        "TITLE": "Title",
+        "TITLE_PLACEHOLDER": "Link title",
+        "URL": "URL",
+        "URL_PLACEHOLDER": "https://www.google.com"
+      },
+      "SAVE": "Save",
+      "CLOSE": "Close"
+    }
+  },
+  "IMAGE": {
+    "DIALOG": {
+      "TITLE": "New image",
+      "FORM": {
+        "TITLE": "Title",
+        "TITLE_PLACEHOLDER": "Image title",
+        "UPLOAD_HINT": "Upload an image or provide an URL",
+        "URL": "URL",
+        "URL_PLACEHOLDER": "https://www.myimage.com/image.png"
+      },
+      "SAVE": "Save",
+      "CLOSE": "Close"
+    }
+  },
+  "CODE": {
+    "DIALOG": {
+      "TITLE": "New code snippet",
+      "FORM": {
+        "LANGUAGE": "Language",
+        "CODE": "Code"
+      },
+      "SAVE": "Save",
+      "CLOSE": "Close"
+    }
+  }
+}

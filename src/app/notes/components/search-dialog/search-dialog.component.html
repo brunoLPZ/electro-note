@@ -1,0 +1,33 @@
+<app-dialog [title]="'Search' | translate" *ngIf="showDialog" size="xl">
+  <form class="flex flex-col gap-2 min-w-[300px] md:min-w-[450px] xl:min-w-[500px]" [formGroup]="formGroup">
+    <div class="flex">
+      <input formControlName="search" type="text" class="w-full" (keydown.enter)="search()">
+      <select formControlName="field">
+        <option [value]="'title'">Título</option>
+        <option [value]="'tag'">Tag</option>
+      </select>
+    </div>
+  </form>
+  <div *ngIf="showResults" class="mt-3">
+    <div>Resultados:</div>
+    <div *ngFor="let note of notes" (click)="clickNote(note)" class="transition-opacity rounded-sm cursor-pointer bg-slate-200 dark:bg-slate-800 my-1 p-2 hover:bg-slate-300 dark:hover:bg-slate-900">
+      <header>
+        <div>{{note.title}}</div>
+        <div class="text-xs">{{note.lastModifiedDate | date : 'MMM d, HH:mm'}}</div>
+      </header>
+      <div class="flex flex-wrap gap-1 py-1 text-xs justify-end">
+        <div *ngFor="let tag of note.tags.slice(0, 5)" class="bg-blue-400/80 dark:bg-blue-500 px-2 rounded-lg">
+          {{tag}}
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!notes.length" class="p-4 rounded-lg text-center bg-teal-700/30 dark:bg-teal-700/80 dark:text-white">
+      No se han encontrado notas con los criterios de búsqueda
+    </div>
+  </div>
+  <div class="flex gap-2 mt-8">
+    <button
+      class="bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-600 px-2 py-1 rounded-sm"
+      (click)="close()">{{'NOTES.DIALOG.CLOSE' | translate}}</button>
+  </div>
+</app-dialog>

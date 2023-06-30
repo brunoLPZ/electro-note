@@ -1,0 +1,14 @@
+{
+  "name": "electro-note",
+  "version": "0.0.1",
+  "description": "Electron app to take notes using markdown",
+  "author": {
+    "name": "Bruno López",
+    "email": "bruno.lopez.trigo@gmail.com"
+  },
+  "main": "main.js",
+  "private": true,
+  "dependencies": {
+    "mongodb": "5.6.0"
+  }
+}

@@ -1,0 +1,61 @@
+<div class="note-list-container transition-all duration-700 flex-col px-2 min-h-full overflow-auto border-r border-slate-900/20 dark:border-slate-300/20"
+  [ngClass]="{'w-10': !isOpen, 'w-72': isOpen}">
+  <div class="sticky top-0 bg-slate-200 dark:bg-slate-900">
+    <div class="pb-1 border border-x-0 border-t-0 border-b-slate-900/20 dark:border-b-slate-300/20">
+      <div class="cursor-pointer" (click)="isOpen = !isOpen">
+        <bars-3-solid-icon></bars-3-solid-icon>
+      </div>
+    </div>
+    <div class="flex py-1 gap-1">
+      <div class="cursor-pointer" (click)="showSearch = true">
+        <magnifying-glass-solid-icon></magnifying-glass-solid-icon>
+      </div>
+      <div class="flex-grow"></div>
+
+      <div class="flex items-center cursor-pointer" (click)="changeSort('lastModifiedDate')">
+        <clock-solid-icon [size]="10" [svgClass]="sortBy !== 'lastModifiedDate' ? 'fill-slate-500/50 dark:fill-slate-400/50' : 'fill-blue-700/80 dark:fill-blue-200'"></clock-solid-icon>
+        <div>
+          <arrow-up-solid-icon *ngIf="sortBy === 'lastModifiedDate' && sortDirection === 1" [size]="16"
+                               [svgClass]="sortBy !== 'lastModifiedDate' ? 'fill-slate-500/50 dark:fill-slate-400/50' : 'fill-blue-700/80 dark:fill-blue-200'"></arrow-up-solid-icon>
+          <arrow-down-solid-icon *ngIf="sortBy !== 'lastModifiedDate' || sortDirection === -1" [size]="16"
+                                 [svgClass]="sortBy !== 'lastModifiedDate' ? 'fill-slate-500/50 dark:fill-slate-400/50' : 'fill-blue-700/80 dark:fill-blue-200'"></arrow-down-solid-icon>
+        </div>
+      </div>
+      <div class="flex items-center cursor-pointer" (click)="changeSort('title')">
+        <div class="text-[8px]"
+             [ngClass]="{'text-slate-500/50 dark:text-slate-400/50': sortBy !== 'title', 'text-blue-700/80 dark:text-blue-200': sortBy === 'title'}">
+          <div>A</div>
+          <div>Z</div>
+        </div>
+        <div>
+          <arrow-up-solid-icon *ngIf="sortBy === 'title' && sortDirection === 1" [size]="16"
+                               [svgClass]="sortBy !== 'title' ? 'fill-slate-500/50 dark:fill-slate-400/50' : 'fill-blue-700/80 dark:fill-blue-200'"></arrow-up-solid-icon>
+          <arrow-down-solid-icon *ngIf="sortBy !== 'title' || sortDirection === -1" [size]="16"
+                                 [svgClass]="sortBy !== 'title' ? 'fill-slate-500/50 dark:fill-slate-400/50' : 'fill-blue-700/80 dark:fill-blue-200'"></arrow-down-solid-icon>
+        </div>
+      </div>
+    </div>
+    <div (click)="newNote.emit()"
+         class="flex justify-center transition-opacity rounded-sm cursor-pointer my-1 p-2 border border-dashed border-slate-800 dark:border-slate-300 hover:scale-95"
+         [ngClass]="{'opacity-0': !isOpen, 'opacity-1 delay-700': isOpen}">
+      <plus-solid-icon></plus-solid-icon>
+    </div>
+  </div>
+  <div *ngFor="let note of notes" class="transition-opacity rounded-sm cursor-pointer bg-slate-100 dark:bg-slate-800 my-1 p-2 hover:scale-95 hover:bg-slate-50 dark:hover:bg-slate-700"
+       (click)="selection.emit(note)"
+       [ngClass]="{'opacity-0': !isOpen, 'opacity-1 delay-700': isOpen}">
+    <header>
+      <div>{{note.title}}</div>
+      <div class="text-xs">{{note.lastModifiedDate | date : 'MMM d, HH:mm'}}</div>
+    </header>
+    <div class="flex flex-wrap gap-1 py-1 text-xs justify-end">
+      <div *ngFor="let tag of note.tags.slice(0, 5)" class="bg-blue-400/80 dark:bg-blue-500 px-2 rounded-lg">
+        {{tag}}
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showMoreNotes" class="flex justify-center mt-1" (click)="nextPage()">
+    <button class="text-sm bg-blue-400/80 hover:bg-blue-500/80 dark:bg-blue-500 dark:hover:bg-blue-600 px-2 py-1 rounded-sm">More ...</button>
+  </div>
+</div>
+<app-search-dialog [showDialog]="showSearch" (closed)="showSearch = false"></app-search-dialog>

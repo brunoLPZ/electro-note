@@ -1,0 +1,62 @@
+<div class="editor-container grid" [ngClass]="{'grid-cols-2': !singleMode && showPreview && !previewFullScreen}">
+  <div class="min-h-full" *ngIf="(singleMode && !showPreview) || (!singleMode && !previewFullScreen)">
+    <div class="flex justify-between py-1 px-1 bg-white dark:bg-slate-700 text-xs">
+      <div class="max-w-[200px] overflow-ellipsis line-clamp-1 font-semibold">{{note.title}}</div>
+      <div class="flex gap-1">
+        <button (click)="changeShowPreview()" [ngClass]="{'line-through': showPreview}" class="flex items-center gap-1 px-1 bg-blue-300/80 dark:bg-blue-600 hover:bg-blue-400/80 hover:dark:bg-blue-700">
+          <eye-solid-icon *ngIf="!showPreview" [size]="12"></eye-solid-icon>
+          <eye-slash-solid-icon *ngIf="showPreview" [size]="12"></eye-slash-solid-icon>
+        </button>
+        <button (click)="edit.emit(note.uuid)" class="px-1 bg-purple-300/80 dark:bg-purple-600 hover:bg-purple-400/80 hover:dark:bg-purple-700"><pencil-solid-icon [size]="12"></pencil-solid-icon></button>
+        <button (click)="delete.emit(note)" class="px-1 bg-red-300/80 dark:bg-red-600 hover:bg-purple-red/80 hover:dark:bg-red-700"><trash-solid-icon [size]="12"></trash-solid-icon></button>
+      </div>
+    </div>
+    <div class="flex justify-between flex-wrap py-1 px-1 bg-white dark:bg-slate-700 text-xs">
+      <div class="flex gap-1 flex-wrap">
+        <button (click)="addHeader(1)" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900">H1</button>
+        <button (click)="addHeader(2)" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900">H2</button>
+        <button (click)="addHeader(3)" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900">H3</button>
+        <button (click)="applyTextStyle('bold')" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900 font-extrabold">A</button>
+        <button (click)="applyTextStyle('italic')" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900 italic">A</button>
+        <button (click)="applyTextStyle('line-through')" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900 line-through">A</button>
+        <button (click)="generateTable()" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900"><table-cells-outline-icon [size]="14"></table-cells-outline-icon></button>
+        <button (click)="openLinkDialog()" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900 underline"><link-outline-icon [size]="14"></link-outline-icon></button>
+        <button (click)="openImageDialog()" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900 underline"><photo-solid-icon [size]="14"></photo-solid-icon></button>
+        <button (click)="openCodeDialog()" class="px-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 hover:dark:bg-slate-900 underline"><code-bracket-solid-icon [size]="14"></code-bracket-solid-icon></button>
+      </div>
+      <button *ngIf="edited" (click)="saveNote()" class="flex items-center gap-1 px-1 bg-blue-300/80 dark:bg-blue-600 hover:bg-blue-400/80 hover:dark:bg-blue-700">
+        <document-arrow-down-outline-icon [size]="12"></document-arrow-down-outline-icon>
+      </button>
+    </div>
+    <textarea (keydown.tab)="handleTabs($event)"
+              (scroll)="syncScroll()"
+              #textArea [(ngModel)]="note.content" (ngModelChange)="editNote()"
+              class="p-2 bg-slate-100 dark:bg-slate-800 resize-none outline-none min-w-full">
+    </textarea>
+  </div>
+  <div class="mx-2 border border-slate-800/20 dark:border-slate-400/20" *ngIf="showPreview">
+    <div class="flex justify-between flex-wrap py-1 px-1 bg-white dark:bg-slate-700 text-xs">
+      <div class="max-w-[200px] overflow-ellipsis line-clamp-1 font-semibold">{{note.title}}</div>
+      <div class="flex gap-1 text-xs">
+        <button *ngIf="!singleMode" (click)="previewFullScreen = !previewFullScreen" class="px-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 hover:dark:bg-slate-900">
+          <arrows-pointing-out-solid-icon *ngIf="!previewFullScreen" [size]="12"></arrows-pointing-out-solid-icon>
+          <arrows-pointing-in-solid-icon *ngIf="previewFullScreen" [size]="12"></arrows-pointing-in-solid-icon>
+        </button>
+        <div *ngIf="singleMode" class="flex gap-1">
+          <button (click)="changeShowPreview()" [ngClass]="{'line-through': showPreview}" class="flex items-center gap-1 px-1 bg-blue-300/80 dark:bg-blue-600 hover:bg-blue-400/80 hover:dark:bg-blue-700">
+            <eye-solid-icon *ngIf="!showPreview" [size]="12"></eye-solid-icon>
+            <eye-slash-solid-icon *ngIf="showPreview" [size]="12"></eye-slash-solid-icon>
+          </button>
+          <button (click)="edit.emit(note.uuid)" class="px-1 bg-purple-300/80 dark:bg-purple-600 hover:bg-purple-400/80 hover:dark:bg-purple-700"><pencil-solid-icon [size]="12"></pencil-solid-icon></button>
+          <button (click)="delete.emit(note)" class="px-1 bg-red-300/80 dark:bg-red-600 hover:bg-purple-red/80 hover:dark:bg-red-700"><trash-solid-icon [size]="12"></trash-solid-icon></button>
+        </div>
+      </div>
+    </div>
+    <div id="preview" class="p-2">
+      <markdown [data]="note.content"></markdown>
+    </div>
+  </div>
+</div>
+<app-link-dialog [showDialog]="showLinkDialog" (closed)="showLinkDialog = false" (saved)="addLink($event)"></app-link-dialog>
+<app-image-dialog [showDialog]="showImageDialog" (closed)="showImageDialog = false" (saved)="addImage($event)"></app-image-dialog>
+<app-code-dialog [showDialog]="showCodeDialog" (closed)="showCodeDialog = false" (saved)="addCode($event)"></app-code-dialog>

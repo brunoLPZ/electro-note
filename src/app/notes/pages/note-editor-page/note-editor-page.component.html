@@ -1,0 +1,29 @@
+<div class="editor-page-container flex gap-2">
+  <div>
+    <app-note-list (selection)="selectNote($event)" (newNote)="createNewNote()"></app-note-list>
+  </div>
+  <ng-container *ngIf="note && noteCopy; else missingNote">
+    <div class="flex-grow">
+      <app-editor [note]="noteCopy" (saved)="isSaved = $event"
+                  (edit)="loadNote($event, true)"
+                  (delete)="deleteNode($event)"
+      ></app-editor>
+    </div>
+    <app-status-bar [note]="noteCopy" [isSaved]="isSaved"></app-status-bar>
+  </ng-container>
+  <ng-template #missingNote>
+    <div class="flex items-center justify-center flex-grow">
+      <div class="p-4 rounded-lg text-center bg-teal-700/30 dark:bg-teal-700/80 dark:text-white">
+        <span class="text-2xl">{{'NOTES.EDITOR.PAGE.SELECT_NOTE_1' | translate}}
+          <a class="bg-teal-700 text-white dark:bg-teal-950 px-2 py-1 rounded-lg cursor-pointer" (click)="createNewNote()">
+            {{'NOTES.EDITOR.PAGE.SELECT_NOTE_LINK' | translate}}</a>
+          {{'NOTES.EDITOR.PAGE.SELECT_NOTE_2' | translate}}
+        </span>
+      </div>
+    </div>
+  </ng-template>
+  <app-note-dialog *ngIf="showNoteDialog" [note]="note" [showDialog]="showNoteDialog"
+                   (closed)="showNoteDialog = false"
+                   (saved)="saveNote($event)"
+  ></app-note-dialog>
+</div>

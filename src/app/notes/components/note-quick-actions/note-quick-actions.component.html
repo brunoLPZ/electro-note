@@ -1,0 +1,14 @@
+<div class="flex items-center gap-5">
+  <button [routerLink]="['/notes', 'editor']" [queryParams]="{'new': true}"
+          class="min-w-[100px] flex items-center justify-between gap-1 bg-blue-400/80 hover:bg-blue-500/80 dark:bg-blue-500 dark:hover:bg-blue-600 px-2 py-1 rounded-sm">
+    {{'NOTES.HOME.PAGE.QUICK_ACTIONS.NEW' | translate}}<plus-solid-icon></plus-solid-icon>
+  </button>
+  <button [routerLink]="['/notes', 'editor']"
+    class="min-w-[100px] flex items-center justify-between gap-1 bg-blue-400/80 hover:bg-blue-500/80 dark:bg-blue-500 dark:hover:bg-blue-600 px-2 py-1 rounded-sm">
+    {{'NOTES.HOME.PAGE.QUICK_ACTIONS.EDITOR' | translate}}<document-text-solid-icon></document-text-solid-icon>
+  </button>
+  <button *ngIf="false"
+          class="min-w-[100px] flex items-center justify-between gap-1 bg-blue-400/80 hover:bg-blue-500/80 dark:bg-blue-500 dark:hover:bg-blue-600 px-2 py-1 rounded-sm">
+    {{'NOTES.HOME.PAGE.QUICK_ACTIONS.SEARCH' | translate}}<magnifying-glass-solid-icon></magnifying-glass-solid-icon>
+  </button>
+</div>

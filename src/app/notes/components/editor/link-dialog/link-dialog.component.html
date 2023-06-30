@@ -1,0 +1,23 @@
+<app-dialog [title]="'LINK.DIALOG.TITLE' | translate" *ngIf="showDialog">
+  <form class="flex flex-col gap-2 min-w-[250px]" [formGroup]="formGroup">
+    <div class="flex flex-col gap-1">
+      <label for="link-title">{{'LINK.DIALOG.FORM.TITLE' | translate}}</label>
+      <input id="link-title" type="text"
+             [placeholder]="'LINK.DIALOG.FORM.TITLE_PLACEHOLDER' | translate" formControlName="title">
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="link-url">{{'LINK.DIALOG.FORM.URL' | translate}}</label>
+      <input id="link-url" type="text"
+             [placeholder]="'LINK.DIALOG.FORM.URL_PLACEHOLDER' | translate" formControlName="url">
+    </div>
+  </form>
+  <div class="flex gap-2 mt-8">
+    <button
+      [disabled]="formGroup.invalid"
+      class="bg-blue-400/80 hover:bg-blue-500/80 dark:bg-blue-500 dark:hover:bg-blue-600 px-2 py-1 rounded-sm disabled:bg-gray-300 disabled:text-gray-400 dark:disabled:bg-gray-500 dark:disabled:text-gray-400"
+      (click)="saveLink()">{{'LINK.DIALOG.SAVE' | translate}}</button>
+    <button
+      class="bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-600 px-2 py-1 rounded-sm"
+      (click)="closed.emit()">{{'LINK.DIALOG.CLOSE' | translate}}</button>
+  </div>
+</app-dialog>

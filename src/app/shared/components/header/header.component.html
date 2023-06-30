@@ -1,0 +1,18 @@
+<div class="sticky top-0 flex items-center justify-between px-2 backdrop-blur-sm lg:px-5 py-2 lg:py-4 border-b border-b-slate-900/10 dark:border-b-slate-50/10">
+  <a [routerLink]="['/']" class="flex items-center gap-1">
+    <!--<bolt-solid-icon [size]="16" [svgClass]="theme === 'dark' ? 'fill-yellow-300' : 'fill-yellow-500'"></bolt-solid-icon>-->
+    <img src="assets/icons/icon-64x64.png" [width]="24"> Electro Note
+  </a>
+  <div class="flex items-center gap-1 cursor-pointer" (click)="changeTheme()">
+    <div>
+      <sun-solid-icon [size]="theme === 'light' ? 24 : 12"
+                      [svgClass]="theme === 'light' ? 'transition-all fill-yellow-500' : 'transition-all fill-yellow-500/50'">
+      </sun-solid-icon>
+    </div>
+    <div>
+      <moon-solid-icon [size]="theme === 'dark' ? 20 : 8"
+                      [svgClass]="theme === 'dark' ? 'transition-all fill-gray-300' : 'transition-all fill-gray-500/50'">
+      </moon-solid-icon>
+    </div>
+  </div>
+</div>

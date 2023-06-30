@@ -1,0 +1,24 @@
+<div [routerLink]="['/notes', 'editor']" [queryParams]="{uuid: note.uuid}"
+     class="relative transition-all cursor-pointer flex flex-col rounded-lg p-6 bg-slate-50 dark:bg-slate-800 min-w-[300px] max-w-[300px] min-h-[250px] hover:scale-95 hover:bg-white hover:dark:bg-slate-700">
+  <button class="absolute top-2 right-2" (click)="deleteNote($event)">
+    <trash-solid-icon [size]="18" [svgClass]="'hover:fill-red-500'"></trash-solid-icon>
+  </button>
+  <header class="pb-3">
+    <div class="flex gap-1 items-center">
+      <document-text-outline-icon [size]="14"></document-text-outline-icon>
+      <h1 class="font-semibold text-lg items-center gap-1 line-clamp-1">
+        {{note.title}}
+      </h1>
+    </div>
+    <div class="text-sm text-right text-slate-700 dark:text-slate-400">{{note.lastModifiedDate | date: 'MMM d, HH:mm'}}</div>
+  </header>
+  <div class="text-slate-700 dark:text-slate-400 pl-4 flex-grow">
+    <div *ngIf="note.description" class="line-clamp-4">{{note.description}}</div>
+    <div *ngIf="!note.description">No description</div>
+  </div>
+  <div class="flex flex-wrap gap-1 py-1 text-xs justify-end">
+    <div *ngFor="let tag of note.tags.slice(0, 5)" class="bg-blue-400/80 dark:bg-blue-500 px-2 rounded-lg">
+      {{tag}}
+    </div>
+  </div>
+</div>

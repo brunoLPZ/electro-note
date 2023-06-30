@@ -1,0 +1,35 @@
+<app-dialog [title]="'NOTES.DIALOG.TITLE' | translate" *ngIf="showDialog" size="lg">
+  <form class="flex flex-col gap-2 min-w-[300px] md:min-w-[450px]" [formGroup]="formGroup">
+    <div class="flex flex-col gap-1">
+      <label for="title">{{'NOTES.DIALOG.FORM.TITLE' | translate}}</label>
+      <input (keydown.enter)="saveNote()" id="title" type="text"
+             [placeholder]="'NOTES.DIALOG.FORM.TITLE_PLACEHOLDER' | translate"
+             formControlName="title">
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="description">{{'NOTES.DIALOG.FORM.DESCRIPTION' | translate}}</label>
+      <textarea id="description"
+                [placeholder]="'NOTES.DIALOG.FORM.DESCRIPTION_PLACEHOLDER' | translate"
+                formControlName="description"
+                [maxLength]="240" [rows]="3">
+      </textarea>
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="tags">{{'NOTES.DIALOG.FORM.TAGS' | translate}}</label>
+      <textarea id="tags"
+                [placeholder]="'NOTES.DIALOG.FORM.TAGS_PLACEHOLDER' | translate"
+                formControlName="tags"
+                [rows]="2">
+      </textarea>
+    </div>
+  </form>
+  <div class="flex gap-2 mt-8">
+    <button
+      [disabled]="formGroup.invalid"
+      class="bg-blue-400/80 hover:bg-blue-500/80 dark:bg-blue-500 dark:hover:bg-blue-600 px-2 py-1 rounded-sm disabled:bg-gray-300 disabled:text-gray-400 dark:disabled:bg-gray-500 dark:disabled:text-gray-400"
+      (click)="saveNote()">{{'NOTES.DIALOG.SAVE' | translate}}</button>
+    <button
+      class="bg-red-400 hover:bg-red-500 dark:bg-red-500 dark:hover:bg-red-600 px-2 py-1 rounded-sm"
+      (click)="closed.emit()">{{'NOTES.DIALOG.CLOSE' | translate}}</button>
+  </div>
+</app-dialog>

@@ -1,0 +1,85 @@
+{
+  "NOTES": {
+    "HOME": {
+      "PAGE": {
+        "LATEST": "Últimas notas",
+        "QUICK_ACTIONS": {
+          "NEW": "Nueva nota",
+          "EDITOR": "Editor",
+          "SEARCH": "Buscar nota"
+        },
+        "TAGS_CHART": {
+          "TITLE": "Etiquetas más usadas",
+          "PLACEHOLDER": "Recuerda que puedes añadir etiquetas a tus notas"
+        },
+        "TASKS_CHART": {
+          "TITLE": "Resumen de tareas",
+          "COMPLETED_LABEL": "COMPLETADAS",
+          "PENDING_LABEL": "PENDIENTES",
+          "PLACEHOLDER": "Puedes añadir tareas a tus notas usando la sintaxis estándar de markdown"
+        }
+      }
+    },
+    "EDITOR": {
+      "PAGE": {
+        "SELECT_NOTE_1": "Selecciona una nota o ",
+        "SELECT_NOTE_LINK": "crea",
+        "SELECT_NOTE_2": " una nueva"
+      },
+      "STATUS_BAR": {
+        "WORDS": "Palabras"
+      }
+    },
+    "DIALOG": {
+      "TITLE": "Nota",
+      "FORM": {
+        "TITLE": "Título",
+        "TITLE_PLACEHOLDER": "Título de la nota",
+        "DESCRIPTION": "Descripción",
+        "DESCRIPTION_PLACEHOLDER": "Descripción de la nota",
+        "TAGS": "Etiquetas",
+        "TAGS_PLACEHOLDER": "etiqueta1, etiqueta2, etiqueta3"
+      },
+      "SAVE": "Guardar",
+      "CLOSE": "Cerrar"
+    }
+  },
+  "LINK": {
+    "DIALOG": {
+      "TITLE": "Nuevo enlace",
+      "FORM": {
+        "TITLE": "Título",
+        "TITLE_PLACEHOLDER": "Título del enlace",
+        "URL": "URL",
+        "URL_PLACEHOLDER": "https://www.google.es"
+      },
+      "SAVE": "Guardar",
+      "CLOSE": "Cerrar"
+    }
+  },
+  "IMAGE": {
+    "DIALOG": {
+      "TITLE": "Nueva imagen",
+      "FORM": {
+        "TITLE": "Título",
+        "TITLE_PLACEHOLDER": "Título de la imagen",
+        "UPLOAD_HINT": "Sube una imagen o proporciona una URL",
+        "URL": "URL",
+        "URL_PLACEHOLDER": "https://www.myimage.es/image.png"
+      },
+      "SAVE": "Guardar",
+      "CLOSE": "Cerrar"
+    }
+  },
+  "CODE": {
+    "DIALOG": {
+      "TITLE": "Nuevo fragmento de código",
+      "FORM": {
+        "LANGUAGE": "Lenguaje",
+        "CODE": "Código"
+      },
+      "SAVE": "Guardar",
+      "CLOSE": "Cerrar"
+    }
+  }
+}

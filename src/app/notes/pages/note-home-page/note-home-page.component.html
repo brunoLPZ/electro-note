@@ -1,0 +1,30 @@
+<div class="pl-5 flex flex-col gap-5">
+  <app-note-quick-actions></app-note-quick-actions>
+  <div class="flex flex-col gap-5">
+    <div class="font-semibold uppercase text-xl">
+      {{'NOTES.HOME.PAGE.LATEST' | translate}}
+    </div>
+    <div class="flex flex-wrap gap-2 justify-center">
+      <ng-container *ngFor="let note of notes">
+        <app-note-card [note]="note"></app-note-card>
+      </ng-container>
+      <div [routerLink]="['/notes', 'editor']" [queryParams]="{new: true}" class="transition-all cursor-pointer flex flex-col justify-center items-center rounded-lg p-6 border border-dashed border-slate-800 dark:border-slate-300 min-w-[300px] max-w-[300px] min-h-[250px] hover:scale-95 opacity-60 hover:opacity-100">
+        <plus-solid-icon [size]="80"></plus-solid-icon>
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-5 pr-5">
+      <div class="flex flex-col flex-grow gap-3">
+        <div class="font-semibold uppercase text-xl">
+          {{'NOTES.HOME.PAGE.TAGS_CHART.TITLE' | translate}}
+        </div>
+        <app-tag-stats></app-tag-stats>
+      </div>
+      <div class="flex flex-col flex-grow gap-3 mt-5 md:mt-0">
+        <div class="font-semibold uppercase text-xl">
+          {{'NOTES.HOME.PAGE.TASKS_CHART.TITLE' | translate}}
+        </div>
+        <app-task-stats></app-task-stats>
+      </div>
+    </div>
+  </div>
+</div>

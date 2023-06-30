@@ -1,0 +1,25 @@
+<div class="flex justify-between fixed bottom-0 left-0 py-1 px-4 text-xs bg-white dark:bg-slate-700 w-screen">
+  <div class="flex gap-2">
+    <div class="bg-slate-200/80 dark:bg-slate-800/80 px-2 rounded-lg max-w-[200px] line-clamp-1">
+      {{note.title}}
+    </div>
+    <ng-container *ngIf="note.tags.length">
+      |
+    </ng-container>
+    <div class="flex flex-wrap gap-1 text-xs">
+      <div *ngFor="let tag of note.tags.slice(0, 5)" class="bg-blue-400/80 dark:bg-blue-500 px-2 rounded-lg">
+        {{tag}}
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-2 items-center">
+    <div *ngIf="note.content.length">
+      {{'NOTES.EDITOR.STATUS_BAR.WORDS' | translate}}
+      <span class="px-2 rounded-lg bg-slate-200/80 dark:bg-slate-800/80">
+        {{note.content.replace('/[^\w\s]/g', '').split(' ').length}}
+      </span>
+    </div>
+    <check-circle-solid-icon *ngIf="isSaved" [size]="14" [svgClass]="'fill-green-600 dark:fill-green-400'"></check-circle-solid-icon>
+    <x-circle-solid-icon *ngIf="!isSaved" [size]="14" [svgClass]="'fill-red-600 dark:fill-red-400'"></x-circle-solid-icon>
+  </div>
+</div>
