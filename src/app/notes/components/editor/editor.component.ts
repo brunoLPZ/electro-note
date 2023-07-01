@@ -3,9 +3,13 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
-  Input, NgZone, OnChanges, OnDestroy,
+  Input,
+  NgZone,
+  OnChanges,
+  OnDestroy,
   OnInit,
-  Output, SimpleChanges,
+  Output,
+  SimpleChanges,
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
@@ -13,6 +17,9 @@ import {Note} from '../../models/note';
 import {NoteService} from '../../services/note-service';
 import {ElectronService} from '../../../core/services';
 import {NotificationService} from '../../../core/services/electron/notification.service';
+import {MermaidAPI} from 'ngx-markdown';
+import Theme = MermaidAPI.Theme;
+import {ThemeService} from '../../../shared/services/theme.service';
 
 @Component({
   selector: 'app-editor',
@@ -40,10 +47,47 @@ export class EditorComponent implements OnInit, OnChanges, OnDestroy {
   showImageDialog = false;
   showCodeDialog = false;
   screenWidth!: number;
+  mermaidDarkOptions: MermaidAPI.Config = {
+    theme: Theme.Base,
+    themeVariables: {
+      darkMode: false,
+      background: '#0f172a',
+      clusterBkg: '#1e293b',
+      altBackground: '#1e293b',
+      clusterBorder: '#e2e8f0',
+      primaryColor: '#3b82f6',
+      primaryTextColor: '#e2e8f0',
+      secondaryColor: '#9233ea',
+      secondaryTextColor: '#e2e8f0',
+      tertiaryColor: '#0f766d',
+      tertiaryTextColor: '#e2e8f0'
+    }
+  };
+  mermaidLightOptions: MermaidAPI.Config = {
+    theme: Theme.Base,
+    themeVariables: {
+      darkMode: false,
+      background: '#e2e8f0',
+      clusterBkg: '#f1f5f9',
+      altBackground: '#f1f5f9',
+      clusterBorder: '#1e293b',
+      primaryColor: '#60a5fa',
+      primaryTextColor: '#1e293b',
+      secondaryColor: '#d8b4fe',
+      secondaryTextColor: '#1e293b',
+      tertiaryColor: '#15a195',
+      tertiaryTextColor: '#1e293b'
+    }
+  };
+  mermaidOptions: MermaidAPI.Config;
 
   constructor(private noteService: NoteService, private electronService: ElectronService,
               private zone: NgZone, private notificationService: NotificationService,
-              private elementRef: ElementRef) {
+              private elementRef: ElementRef, private themeService: ThemeService) {
+    this.mermaidOptions = this.themeService.currentTheme === 'dark' ? this.mermaidDarkOptions : this.mermaidLightOptions;
+    this.themeService.themeChanges().subscribe((theme) => {
+      this.mermaidOptions = theme === 'dark' ? this.mermaidDarkOptions : this.mermaidLightOptions;
+    });
     this.electronService.ipcRenderer.on('save', () => {
       this.zone.run(() => this.saveNote());
     });

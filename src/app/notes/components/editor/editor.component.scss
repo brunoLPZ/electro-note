@@ -108,3 +108,12 @@ markdown {
     }
   }
 }
+
+.dark {
+  .er.attributeBoxEven {
+    fill: #1e293b !important;
+  }
+  .er.attributeBoxOdd {
+    fill: #28364f !important;
+  }
+}
