@@ -38,7 +38,10 @@
         "DESCRIPTION": "Descripción",
         "DESCRIPTION_PLACEHOLDER": "Descripción de la nota",
         "TAGS": "Etiquetas",
-        "TAGS_PLACEHOLDER": "etiqueta1, etiqueta2, etiqueta3"
+        "TAGS_PLACEHOLDER": "etiqueta1, etiqueta2, etiqueta3",
+        "TEMPLATE": "Plantilla",
+        "NONE_TEMPLATE": "Ninguna",
+        "MARK_AS_TEMPLATE": "Marcar como plantilla"
       },
       "SAVE": "Guardar",
       "CLOSE": "Cerrar"

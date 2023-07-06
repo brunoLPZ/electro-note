@@ -38,7 +38,10 @@
         "DESCRIPTION": "Description",
         "DESCRIPTION_PLACEHOLDER": "Note description",
         "TAGS": "Tags",
-        "TAGS_PLACEHOLDER": "tag1, tag2, tag3"
+        "TAGS_PLACEHOLDER": "tag1, tag2, tag3",
+        "TEMPLATE": "Template",
+        "NONE_TEMPLATE": "None",
+        "MARK_AS_TEMPLATE": "Mark as template"
       },
       "SAVE": "Save",
       "CLOSE": "Close"
