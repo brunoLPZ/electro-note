@@ -1,4 +1,4 @@
-import {Component, EventEmitter, NgZone, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, NgZone, OnInit, Output} from '@angular/core';
 import {Note} from '../../models/note';
 import {NoteService} from '../../services/note-service';
 import {SortDirection} from 'mongodb';
@@ -10,6 +10,9 @@ import {ElectronService} from '../../../core/services';
   styleUrls: ['./note-list.component.scss']
 })
 export class NoteListComponent implements OnInit {
+  @Input()
+  showSearch = false;
+
   @Output()
   selection: EventEmitter<Note> = new EventEmitter<Note>();
   @Output()
@@ -18,8 +21,8 @@ export class NoteListComponent implements OnInit {
   notes: Note[] = [];
   isOpen = false;
   showMoreNotes = false;
-  showSearch = false;
 
+  isTemplate = false;
   sortBy: 'lastModifiedDate' | 'title' = 'lastModifiedDate';
   sortDirection: SortDirection = -1;
   private offset = 0;
@@ -36,6 +39,11 @@ export class NoteListComponent implements OnInit {
     this.electronService.ipcRenderer.on('find', () => {
       this.zone.run(() => this.showSearch = true);
     });
+  }
+
+  toggleTemplates() {
+    this.isTemplate = !this.isTemplate;
+    this.getNotes(true);
   }
 
   changeSort(sort: 'lastModifiedDate' | 'title') {
@@ -59,7 +67,7 @@ export class NoteListComponent implements OnInit {
     }
     const sort: any = {};
     sort[this.sortBy] = this.sortDirection;
-    this.noteService.getNotes(this.limit, this.offset, sort).then(notes => {
+    this.noteService.getNotes(this.limit, this.offset, this.isTemplate, sort).then(notes => {
       this.showMoreNotes = notes.length === this.limit;
       if (reset) {
         this.notes = notes;

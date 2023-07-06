@@ -1,11 +1,13 @@
 <div [routerLink]="['/notes', 'editor']" [queryParams]="{uuid: note.uuid}"
+     [ngClass]="{'border border-y-0 border-r-0 border-l-teal-700/80 dark:border-l-teal-500 border-l-4': note.isTemplate}"
      class="relative transition-all cursor-pointer flex flex-col rounded-lg p-6 bg-slate-50 dark:bg-slate-800 min-w-[300px] max-w-[300px] min-h-[250px] hover:scale-95 hover:bg-white hover:dark:bg-slate-700">
   <button class="absolute top-2 right-2" (click)="deleteNote($event)">
     <trash-solid-icon [size]="18" [svgClass]="'hover:fill-red-500'"></trash-solid-icon>
   </button>
   <header class="pb-3">
     <div class="flex gap-1 items-center">
-      <document-text-outline-icon [size]="14"></document-text-outline-icon>
+      <clipboard-document-solid-icon *ngIf="note.isTemplate" [size]="14" svgClass="fill-teal-700/80 dark:fill-teal-500"></clipboard-document-solid-icon>
+      <document-text-outline-icon *ngIf="!note.isTemplate" [size]="14"></document-text-outline-icon>
       <h1 class="font-semibold text-lg items-center gap-1 line-clamp-1">
         {{note.title}}
       </h1>

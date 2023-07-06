@@ -33,6 +33,17 @@ button {
   }
 }
 
+input:checked ~ .dot {
+  transform: translateX(20px);
+  background-color: #60A5FAFF;
+}
+
+.dark {
+  input:checked ~ .dot {
+    background-color: #3B82F6FF;
+  }
+}
+
 ::-webkit-scrollbar {
-  display: none;
+    display: none;
 }

@@ -24,31 +24,34 @@ export class NoteService {
     return this.collection.findOne<Note>({uuid});
   }
   async getMostRecentNotes(): Promise<Note[]> {
-    return this.collection.find<Note>({}).sort({lastModifiedDate: -1}).limit(5).toArray();
+    return this.collection.find<Note>({isTemplate: false}).sort({lastModifiedDate: -1}).limit(5).toArray();
   }
 
-  async getNotes(limit = 10, offset = 0, sort: {[key: string]: SortDirection} = {title: -1}): Promise<Note[]> {
-    return this.collection.find<Note>({}).sort(sort).limit(10).skip(offset).toArray();
+  async getNotes(limit = 10, offset = 0, isTemplate = false, sort: {[key: string]: SortDirection} = {title: -1}): Promise<Note[]> {
+    return this.collection.find<Note>({isTemplate}).sort(sort).limit(10).skip(offset).toArray();
   }
 
   async upsertNote(note: Note): Promise<boolean> {
     const existingNote = await this.collection.findOne<Note>({uuid: note.uuid});
-    const tasks = this.extractTasks(note);
+    const tasks = !note.isTemplate ? this.extractTasks(note) : [];
     // Update note if exists
     if (existingNote != null) {
-      // Detect removed tags
-      const removedTags = existingNote.tags.filter(t => !note.tags.includes(t));
-      if (removedTags.length) {
-        await this.tagService.removeTags(removedTags);
+      if (!note.isTemplate) {
+        // Detect removed tags
+        const removedTags = existingNote.tags.filter(t => !note.tags.includes(t));
+        if (removedTags.length) {
+          await this.tagService.removeTags(removedTags);
+        }
+        // Detect new tags
+        const newTags = note.tags.filter(t => !existingNote.tags.includes(t));
+        // Upsert new tags tags
+        await this.tagService.upsertTags(newTags);
       }
-      // Detect new tags
-      const newTags = note.tags.filter(t => !existingNote.tags.includes(t));
-      // Upsert new tags tags
-      await this.tagService.upsertTags(newTags);
       const updateResult = await this.collection.updateOne({uuid: note.uuid}, {
         $set: {
           title: note.title,
           description: note.description,
+          isTemplate: note.isTemplate,
           content: note.content,
           lastModifiedDate: Date.now(),
           tags: note.tags,
@@ -59,8 +62,10 @@ export class NoteService {
     }
     // Insert note if it doesn't exist
     else {
-      // Upsert new tags tags
-      await this.tagService.upsertTags(note.tags);
+      if (!note.isTemplate) {
+        // Upsert new tags tags
+        await this.tagService.upsertTags(note.tags);
+      }
       const insertResult = await this.collection.insertOne(
         {...note, tasks, lastModifiedDate: Date.now()});
       this.notesChangeSubject.next();
@@ -69,7 +74,7 @@ export class NoteService {
   }
 
   async deleteNote(note: Note): Promise<boolean> {
-    if (note.tags.length) {
+    if (note.tags.length && !note.isTemplate) {
       await this.tagService.removeTags(note.tags);
     }
     const result = await this.collection.deleteOne({uuid: note.uuid});
@@ -83,6 +88,10 @@ export class NoteService {
 
   async searchNoteByTag(tag: string): Promise<Note[]> {
     return this.collection.find<Note>({tags: {$regex: `.*${tag}.*`, $options: 'i'}}).toArray();
+  }
+
+  async getTemplates(): Promise<Note[]> {
+    return this.collection.find<Note>({isTemplate: true}).toArray();
   }
 
   private extractTasks(note: Note): Task[] {

@@ -1,6 +1,6 @@
 <div class="editor-page-container flex gap-2">
   <div>
-    <app-note-list (selection)="selectNote($event)" (newNote)="createNewNote()"></app-note-list>
+    <app-note-list [showSearch]="showSearch" (selection)="selectNote($event)" (newNote)="createNewNote()"></app-note-list>
   </div>
   <ng-container *ngIf="note && noteCopy; else missingNote">
     <div class="flex-grow">

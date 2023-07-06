@@ -38,6 +38,13 @@ export class AppComponent implements OnInit {
         }
       }));
     });
+    this.electronService.ipcRenderer.on('find', () => {
+      this.zone.run(() => this.router.navigate(['/notes', 'editor'], {
+        queryParams: {
+          find: true
+        }
+      }));
+    });
   }
 
 }

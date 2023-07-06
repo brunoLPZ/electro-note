@@ -1,4 +1,4 @@
-<div class="editor-container grid" [ngClass]="{'grid-cols-2': !singleMode && showPreview && !previewFullScreen}">
+<div class="editor-container grid" [ngClass]="!singleMode && showPreview && !previewFullScreen ? 'grid-cols-2' : 'grid-cols-1'">
   <div class="min-h-full" *ngIf="(singleMode && !showPreview) || (!singleMode && !previewFullScreen)">
     <div class="flex justify-between py-1 px-1 bg-white dark:bg-slate-700 text-xs">
       <div class="max-w-[200px] overflow-ellipsis line-clamp-1 font-semibold">{{note.title}}</div>

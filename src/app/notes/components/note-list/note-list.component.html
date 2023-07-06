@@ -11,7 +11,11 @@
         <magnifying-glass-solid-icon></magnifying-glass-solid-icon>
       </div>
       <div class="flex-grow"></div>
-
+      <div class="flex items-center cursor-pointer mr-2" (click)="toggleTemplates()">
+        <clipboard-document-solid-icon [size]="14"
+                                       [svgClass]="!isTemplate ? 'fill-slate-500/50 dark:fill-slate-400/50' : 'fill-teal-700/80 dark:fill-teal-500'">
+        </clipboard-document-solid-icon>
+      </div>
       <div class="flex items-center cursor-pointer" (click)="changeSort('lastModifiedDate')">
         <clock-solid-icon [size]="10" [svgClass]="sortBy !== 'lastModifiedDate' ? 'fill-slate-500/50 dark:fill-slate-400/50' : 'fill-blue-700/80 dark:fill-blue-200'"></clock-solid-icon>
         <div>
@@ -43,9 +47,9 @@
   </div>
   <div *ngFor="let note of notes" class="transition-opacity rounded-sm cursor-pointer bg-slate-100 dark:bg-slate-800 my-1 p-2 hover:scale-95 hover:bg-slate-50 dark:hover:bg-slate-700"
        (click)="selection.emit(note)"
-       [ngClass]="{'opacity-0': !isOpen, 'opacity-1 delay-700': isOpen}">
+       [ngClass]="{'opacity-0': !isOpen, 'opacity-1 delay-700': isOpen, 'border border-y-0 border-r-0 border-l-teal-700/80 dark:border-l-teal-500 border-l-4': note.isTemplate}">
     <header>
-      <div>{{note.title}}</div>
+      <div class="flex items-center gap-1"><clipboard-document-solid-icon *ngIf="note.isTemplate" [size]="14" svgClass="fill-teal-700/80 dark:fill-teal-500"></clipboard-document-solid-icon>{{note.title}}</div>
       <div class="text-xs">{{note.lastModifiedDate | date : 'MMM d, HH:mm'}}</div>
     </header>
     <div class="flex flex-wrap gap-1 py-1 text-xs justify-end">

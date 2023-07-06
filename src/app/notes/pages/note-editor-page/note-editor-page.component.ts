@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {Note} from '../../models/note';
 import {ActivatedRoute} from '@angular/router';
 import {NoteService} from '../../services/note-service';
 import {NotificationService} from '../../../core/services/electron/notification.service';
+import {ElectronService} from '../../../core/services';
 
 @Component({
   selector: 'app-note-editor-page',
@@ -15,18 +16,35 @@ export class NoteEditorPageComponent {
   noteCopy?: Note;
   showNoteDialog = false;
   isSaved = true;
+  showSearch = false;
 
   constructor(private activateRoute: ActivatedRoute, private noteService: NoteService,
-              private notificationService: NotificationService) {
+              private zone: NgZone, private notificationService: NotificationService,
+              private electronService: ElectronService) {
+    this.electronService.ipcRenderer.on('new', () => {
+      this.zone.run(() => {
+        this.note = undefined;
+        this.noteCopy = undefined;
+        this.showNoteDialog = true;
+      });
+    });
+    this.electronService.ipcRenderer.on('find', () => {
+      this.zone.run(() => {
+        this.showSearch = true;
+      });
+    });
     this.activateRoute.queryParamMap.subscribe((params) => {
       if (params.has('new')) {
         this.note = undefined;
+        this.noteCopy = undefined;
         this.showNoteDialog = true;
       } else if (params.has('uuid')) {
         const uuid = params.get('uuid');
         if (uuid) {
           this.loadNote(uuid, params.has('edit'));
         }
+      } else if (params.has('find')) {
+        this.showSearch = true;
       }
     });
   }
